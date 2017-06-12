@@ -44,6 +44,7 @@ open class MarkdownParser {
               automaticLinkDetectionEnabled: Bool = true,
               customElements: [MarkdownElement] = []) {
     self.font = font
+    self.color = color
 
     header = MarkdownHeader(font: font)
     list = MarkdownList(font: font)
@@ -82,10 +83,10 @@ open class MarkdownParser {
 
   open func parse(_ markdown: NSAttributedString) -> NSAttributedString {
     let attributedString = NSMutableAttributedString(attributedString: markdown)
-    attributedString.addAttribute(
-        NSFontAttributeName, value: font,
-        NSForegroundColorAttributeName, value: color,
-        range: NSRange(location: 0, length: attributedString.length)
+    attributedString.addAttributes([
+        NSFontAttributeName: font,
+        NSForegroundColorAttributeName: color
+        ], range: NSRange(location: 0, length: attributedString.length)
     )
     var elements: [MarkdownElement] = escapingElements
     elements.append(contentsOf: defaultElements)
